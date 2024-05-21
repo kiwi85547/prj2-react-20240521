@@ -3,11 +3,20 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Box,
+  Button,
   FormControl,
   FormLabel,
   Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
   Textarea,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 
@@ -16,6 +25,7 @@ export function BoardView() {
   const [board, setBoard] = useState(null);
   const toast = useToast();
   const navigate = useNavigate();
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   useEffect(() => {
     axios
@@ -32,6 +42,10 @@ export function BoardView() {
         }
       });
   }, []);
+
+  function handleClickRemove() {
+    axios.delete(`/api/board/${id}`);
+  }
 
   if (board === null) {
     return <Spinner />;
@@ -69,6 +83,28 @@ export function BoardView() {
           </FormControl>
         </Box>
       </Box>
+
+      <Box>
+        <Button colorScheme={"purple"}>수정</Button>
+        <Button colorScheme={"red"} onClick={onOpen}>
+          삭제
+        </Button>
+      </Box>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>메세지</ModalHeader>
+          <ModalBody>삭제하시겠습니까?</ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>취소</Button>
+            <Button colorScheme={"red"} onClick={handleClickRemove}>
+              확인
+            </Button>
+          </ModalFooter>
+          <ModalCloseButton />
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
