@@ -8,14 +8,18 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [writer, setWriter] = useState("");
   const toast = useToast();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   function handleSaveClick() {
+    setLoading(true);
     axios
       .post("/api/board/add", {
         // property 명과 값이 같으면 하나만 써도 됨 title:title
@@ -42,7 +46,7 @@ export function BoardWrite() {
           });
         }
       })
-      .finally();
+      .finally(() => setLoading(false));
   }
 
   let disableSaveButton = false;
@@ -83,6 +87,7 @@ export function BoardWrite() {
             colorScheme={"blue"}
             onClick={handleSaveClick}
             isDisabled={disableSaveButton}
+            isLoading={loading}
           >
             저장
           </Button>

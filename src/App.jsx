@@ -3,6 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Home } from "./page/Home.jsx";
 import { BoardWrite } from "./page/board/BoardWrite.jsx";
+import { BoardList } from "./page/board/BoardList.jsx";
 
 const router = createBrowserRouter([
   {
@@ -10,9 +11,10 @@ const router = createBrowserRouter([
     element: <Home />,
     children: [
       {
-        path: "write",
-        element: <BoardWrite />,
+        index: true,
+        element: <BoardList />,
       },
+      { path: "write", element: <BoardWrite /> },
     ],
   },
 ]);
