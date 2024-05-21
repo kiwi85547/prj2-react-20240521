@@ -30,11 +30,33 @@ export function BoardWrite() {
           description: "새 글이 등록되었습니다.",
           status: "success",
           position: "top",
+          duration: 1000,
         });
         navigate("/");
       })
-      .catch()
+      .catch((e) => {
+        const code = e.response.status;
+        if (code == 400) {
+          toast({
+            description: "글을 입력해주세요",
+            status: "error",
+            position: "top",
+            duration: 1500,
+          });
+        }
+      })
       .finally();
+  }
+
+  let disableSaveButton = false;
+  if (title.trim().length === 0) {
+    disableSaveButton = true;
+  }
+  if (content.trim().length === 0) {
+    disableSaveButton = true;
+  }
+  if (writer.trim().length === 0) {
+    disableSaveButton = true;
   }
 
   return (
@@ -60,7 +82,11 @@ export function BoardWrite() {
           </FormControl>
         </Box>
         <Box>
-          <Button colorScheme={"blue"} onClick={handleSaveClick}>
+          <Button
+            isDisabled={disableSaveButton}
+            colorScheme={"blue"}
+            onClick={handleSaveClick}
+          >
             저장
           </Button>
         </Box>
