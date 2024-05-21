@@ -33,16 +33,16 @@ export function BoardList() {
             </Tr>
           </Thead>
           <Tbody>
-            {boardList.map((board) => (
+            {boardList.map((a) => (
               <Tr
                 cursor={"pointer"}
                 _hover={{ bgColor: "gray.200" }}
-                onClick={() => navigate(`/board/${board.id}`)}
-                key={board.id}
+                onClick={() => navigate(`/board/${a.id}`)}
+                key={a.id}
               >
-                <Td>{board.id}</Td>
-                <Td>{board.title}</Td>
-                <Td>{board.writer}</Td>
+                <Td>{a.id}</Td>
+                <Td>{a.title}</Td>
+                <Td>{a.writer}</Td>
               </Tr>
             ))}
           </Tbody>
