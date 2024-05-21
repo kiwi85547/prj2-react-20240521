@@ -34,6 +34,7 @@ export function BoardWrite() {
           position: "top",
           duration: 2000,
         });
+        navigate("/");
       })
       .catch((e) => {
         const code = e.response.status;
