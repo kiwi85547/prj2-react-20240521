@@ -20,6 +20,9 @@ export function MemberSignup() {
   const [nickName, setNickName] = useState("");
   // 저장 버튼 여러번 넘어가지 않도록
   const [isLoading, setIsLoading] = useState(false);
+  // 중복확인 했는지, 안했는지
+  const [isCheckedEmail, setIsCheckedEmail] = useState(false);
+  const [isCheckedNickName, setIsCheckedNickName] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -33,6 +36,7 @@ export function MemberSignup() {
           status: "success",
           description: "회원 가입이 완료되었습니다.",
           position: "top",
+          duration: 1500,
         });
         // todo : 로그인 화면으로 이동
         navigate("/");
@@ -44,12 +48,14 @@ export function MemberSignup() {
             status: "error",
             description: "입력값을 확인해주세요",
             position: "top",
+            duration: 1500,
           });
         } else {
           toast({
             status: "error",
             description: "회원 가입 중 문제가 발생하였습니다.",
             position: "top",
+            duration: 1500,
           });
         }
       })
@@ -66,6 +72,7 @@ export function MemberSignup() {
           status: "warning",
           description: "사용할 수 없는 이메일입니다.",
           position: "top",
+          duration: 1500,
         });
       })
       // 사용할 수 있는 이메일
@@ -75,7 +82,9 @@ export function MemberSignup() {
             status: "info",
             description: "사용할 수 있는 이메일입니다.",
             position: "top",
+            duration: 1500,
           });
+          setIsCheckedEmail(true);
         }
       })
       .finally();
@@ -89,6 +98,7 @@ export function MemberSignup() {
           status: "warning",
           description: "사용할 수 없는 닉네임입니다.",
           position: "top",
+          duration: 1500,
         });
       })
       .catch((err) => {
@@ -97,13 +107,17 @@ export function MemberSignup() {
             status: "info",
             description: "사용할 수 있는 닉네임입니다.",
             position: "top",
+            duration: 1500,
           });
+          setIsCheckedNickName(true);
         }
       })
       .finally();
   }
 
   const isCheckPassword = password === passwordCheck;
+
+  // isDisabled=false 버튼 활성화
   let isDisabled = false;
 
   if (!isCheckPassword) {
@@ -116,6 +130,14 @@ export function MemberSignup() {
       nickName.trim().length > 0
     )
   ) {
+    isDisabled = true;
+  }
+
+  if (!isCheckedEmail) {
+    isDisabled = true;
+  }
+
+  if (!isCheckedNickName) {
     isDisabled = true;
   }
 
@@ -133,13 +155,21 @@ export function MemberSignup() {
               </Button>
             </InputRightElement>
           </InputGroup>
+          {isCheckedEmail || (
+            <FormHelperText>이메일 중복확인을 해주세요.</FormHelperText>
+          )}
         </FormControl>
       </Box>
 
       <Box>
         <FormControl>
           <FormLabel>패스워드</FormLabel>
-          <Input onChange={(e) => setPassword(e.target.value)} />
+          <Input
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setIsCheckedEmail(true);
+            }}
+          />
         </FormControl>
       </Box>
 
@@ -157,16 +187,25 @@ export function MemberSignup() {
         <FormControl>
           <FormLabel>별명</FormLabel>
           <InputGroup>
-            <Input onChange={(e) => setNickName(e.target.value)} />
+            <Input
+              onChange={(e) => {
+                setNickName(e.target.value);
+                setIsCheckedNickName(false);
+              }}
+            />
             <InputRightElement w={"75px"} mr={1}>
               <Button onClick={handleCheckNickName} size="sm">
                 중복확인
               </Button>
             </InputRightElement>
           </InputGroup>
+          {isCheckedNickName || (
+            <FormHelperText>별명 중복확인을 해주세요.</FormHelperText>
+          )}
         </FormControl>
       </Box>
       <Box>
+        {/*isDisabled가 true이면 비활성화*/}
         <Button
           colorScheme={"blue"}
           onClick={handleClick}
