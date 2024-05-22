@@ -23,6 +23,8 @@ export function MemberSignup() {
   // 중복확인 했는지, 안했는지
   const [isCheckedEmail, setIsCheckedEmail] = useState(false);
   const [isCheckedNickName, setIsCheckedNickName] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(false);
+
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -37,6 +39,7 @@ export function MemberSignup() {
           description: "회원 가입이 완료되었습니다.",
           position: "top",
           duration: 1500,
+          isClosable: true,
         });
         // todo : 로그인 화면으로 이동
         navigate("/");
@@ -49,6 +52,7 @@ export function MemberSignup() {
             description: "입력값을 확인해주세요",
             position: "top",
             duration: 1500,
+            isClosable: true,
           });
         } else {
           toast({
@@ -56,6 +60,7 @@ export function MemberSignup() {
             description: "회원 가입 중 문제가 발생하였습니다.",
             position: "top",
             duration: 1500,
+            isClosable: true,
           });
         }
       })
@@ -73,6 +78,7 @@ export function MemberSignup() {
           description: "사용할 수 없는 이메일입니다.",
           position: "top",
           duration: 1500,
+          isClosable: true,
         });
       })
       // 사용할 수 있는 이메일
@@ -83,6 +89,7 @@ export function MemberSignup() {
             description: "사용할 수 있는 이메일입니다.",
             position: "top",
             duration: 1500,
+            isClosable: true,
           });
           setIsCheckedEmail(true);
         }
@@ -99,6 +106,7 @@ export function MemberSignup() {
           description: "사용할 수 없는 닉네임입니다.",
           position: "top",
           duration: 1500,
+          isClosable: true,
         });
       })
       .catch((err) => {
@@ -108,6 +116,7 @@ export function MemberSignup() {
             description: "사용할 수 있는 닉네임입니다.",
             position: "top",
             duration: 1500,
+            isClosable: true,
           });
           setIsCheckedNickName(true);
         }
@@ -115,12 +124,12 @@ export function MemberSignup() {
       .finally();
   }
 
-  const isCheckPassword = password === passwordCheck;
+  const isCheckedPassword = password === passwordCheck;
 
   // isDisabled=false 버튼 활성화
   let isDisabled = false;
 
-  if (!isCheckPassword) {
+  if (!isCheckedPassword) {
     isDisabled = true;
   }
   if (
@@ -141,6 +150,10 @@ export function MemberSignup() {
     isDisabled = true;
   }
 
+  if (!isValidEmail) {
+    isDisabled = true;
+  }
+
   return (
     <Box>
       <Box>회원가입</Box>
@@ -148,9 +161,21 @@ export function MemberSignup() {
         <FormControl>
           <FormLabel>이메일</FormLabel>
           <InputGroup>
-            <Input onChange={(e) => setEmail(e.target.value)} />
+            <Input
+              type={"email"}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setIsCheckedEmail(false);
+                setIsValidEmail(!e.target.validity.typeMismatch);
+                console.log(e.target.validity.typeMismatch);
+              }}
+            />
             <InputRightElement w={"75px"} mr={1}>
-              <Button onClick={handleCheckEmail} size={"sm"}>
+              <Button
+                isDiabled={!isValidEmail || email.trim().length === 0}
+                onClick={handleCheckEmail}
+                size={"sm"}
+              >
                 중복확인
               </Button>
             </InputRightElement>
@@ -158,16 +183,20 @@ export function MemberSignup() {
           {isCheckedEmail || (
             <FormHelperText>이메일 중복확인을 해주세요.</FormHelperText>
           )}
+          {isValidEmail || (
+            <FormHelperText>
+              올바른 이메일 형식으로 작성해 주세요.
+            </FormHelperText>
+          )}
         </FormControl>
       </Box>
 
       <Box>
         <FormControl>
-          <FormLabel>패스워드</FormLabel>
+          <FormLabel>암호</FormLabel>
           <Input
             onChange={(e) => {
               setPassword(e.target.value);
-              setIsCheckedEmail(true);
             }}
           />
         </FormControl>
@@ -177,7 +206,7 @@ export function MemberSignup() {
         <FormControl>
           <FormLabel>암호 확인</FormLabel>
           <Input onChange={(e) => setPasswordCheck(e.target.value)} />
-          {isCheckPassword || (
+          {isCheckedPassword || (
             <FormHelperText>암호가 일치하지 않습니다.</FormHelperText>
           )}
         </FormControl>
@@ -194,7 +223,11 @@ export function MemberSignup() {
               }}
             />
             <InputRightElement w={"75px"} mr={1}>
-              <Button onClick={handleCheckNickName} size="sm">
+              <Button
+                isDisabled={nickName.trim().length === 0}
+                onClick={handleCheckNickName}
+                size="sm"
+              >
                 중복확인
               </Button>
             </InputRightElement>
