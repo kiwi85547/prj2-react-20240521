@@ -104,6 +104,20 @@ export function MemberSignup() {
   }
 
   const isCheckPassword = password === passwordCheck;
+  let isDisabled = false;
+
+  if (!isCheckPassword) {
+    isDisabled = true;
+  }
+  if (
+    !(
+      email.trim().length > 0 &&
+      password.trim().length > 0 &&
+      nickName.trim().length > 0
+    )
+  ) {
+    isDisabled = true;
+  }
 
   return (
     <Box>
@@ -145,7 +159,7 @@ export function MemberSignup() {
           <InputGroup>
             <Input onChange={(e) => setNickName(e.target.value)} />
             <InputRightElement w={"75px"} mr={1}>
-              <Button onClick={handleCheckNickName} sizma="sm">
+              <Button onClick={handleCheckNickName} size="sm">
                 중복확인
               </Button>
             </InputRightElement>
@@ -157,6 +171,7 @@ export function MemberSignup() {
           colorScheme={"blue"}
           onClick={handleClick}
           isLoading={isLoading}
+          isDisabled={isDisabled}
         >
           가입
         </Button>
