@@ -13,17 +13,18 @@ import { useNavigate } from "react-router-dom";
 export function MemberSignup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [writer, setWriter] = useState("");
+  const [nickName, setNickName] = useState("");
   // 저장 버튼 여러번 넘어가지 않도록
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
 
   function handleClick() {
+    setIsLoading(true);
     // 객체가 직렬화해서 넘어감
     axios
-      .post("/api/member/signup", { email, password, writer })
-      .then((res) => {
+      .post("/api/member/signup", { email, password, nickName })
+      .then(() => {
         toast({
           status: "success",
           description: "회원 가입이 완료되었습니다.",
@@ -71,7 +72,7 @@ export function MemberSignup() {
       <Box>
         <FormControl>
           <FormLabel>별명</FormLabel>
-          <Input onChange={(e) => setWriter(e.target.value)} />
+          <Input onChange={(e) => setNickName(e.target.value)} />
         </FormControl>
       </Box>
       <Box>
