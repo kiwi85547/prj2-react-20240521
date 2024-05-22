@@ -22,6 +22,7 @@ import { useNavigate, useParams } from "react-router-dom";
 export function MemberInfo() {
   const [member, setMember] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [password, setPassword] = useState("");
   // 경로에 붙어서
   const { id } = useParams();
   const toast = useToast();
@@ -35,8 +36,9 @@ export function MemberInfo() {
       .catch((err) => {
         if (err.status === 404) {
           toast({
-            status: "info",
-            description: "잘못된 경로입니다.",
+            status: "warning",
+            description: "존재하지 않는 회원입니다.",
+            position: "top",
             duration: 200,
           });
           navigate("/");
@@ -44,13 +46,10 @@ export function MemberInfo() {
       });
   }, []);
 
-  if (member === null) {
-    return <Spinner />;
-  }
-
   function handleClickRemove() {
+    setIsLoading(true);
     axios
-      .delete(`/api/member/${id}`)
+      .delete(`/api/member/${id}`, { data: { id, password } })
       .then(() => {
         toast({
           status: "success",
@@ -71,7 +70,13 @@ export function MemberInfo() {
       .finally(() => {
         // 탈퇴 버튼을 연속으로 누르지 못하도록
         setIsLoading(false);
+        setPassword("");
+        onClose();
       });
+  }
+
+  if (member === null) {
+    return <Spinner />;
   }
 
   return (
@@ -114,14 +119,19 @@ export function MemberInfo() {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader></ModalHeader>
-          <ModalBody>탈퇴하시겠습니까?</ModalBody>
+          <ModalHeader>탈퇴 확인</ModalHeader>
+          <ModalBody>
+            <FormControl>
+              <FormLabel>암호</FormLabel>
+              <Input onChange={(e) => setPassword(e.target.value)} />
+            </FormControl>
+          </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>취소</Button>
             <Button
+              isloading={isLoading}
               colorScheme={"red"}
               onClick={handleClickRemove}
-              isloading={isLoading}
             >
               확인
             </Button>

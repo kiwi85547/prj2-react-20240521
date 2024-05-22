@@ -64,7 +64,9 @@ export function MemberSignup() {
           });
         }
       })
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   function handleCheckEmail() {
@@ -155,6 +157,8 @@ export function MemberSignup() {
     isDisabled = true;
   }
 
+  console.log(isValidEmail);
+  console.log(email);
   return (
     <Box>
       <Box>회원가입</Box>
@@ -177,7 +181,7 @@ export function MemberSignup() {
             />
             <InputRightElement w={"75px"} mr={1}>
               <Button
-                isDiabled={!isValidEmail || email.trim().length === 0}
+                isDisabled={!isValidEmail || email.trim().length === 0}
                 onClick={handleCheckEmail}
                 size={"sm"}
               >
