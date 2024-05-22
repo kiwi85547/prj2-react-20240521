@@ -4,6 +4,7 @@ import React from "react";
 
 export function Navbar() {
   const navigate = useNavigate();
+
   return (
     <Flex gap={3}>
       <Box
