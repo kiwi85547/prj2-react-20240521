@@ -40,8 +40,7 @@ export function MemberInfo() {
         {/*    <FormLabel>가입 일시(다른버전)</FormLabel>*/}
         {/*    <Input value={member.signupDateAndTime} readOnly />*/}
         {/*  </FormControl>*/}
-
-        </Box>
+        {/*</Box>*/}
       </Box>
     </Box>
   );
