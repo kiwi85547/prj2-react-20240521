@@ -168,6 +168,9 @@ export function MemberSignup() {
                 setEmail(e.target.value);
                 setIsCheckedEmail(false);
                 setIsValidEmail(!e.target.validity.typeMismatch);
+                console.log(e.target.validity);
+                // true 이면 Mismatch, false이면 잘 매치됨.
+                console.log(e.target.validity.typeMismatch);
               }}
             />
             <InputRightElement w={"75px"} mr={1}>
@@ -208,13 +211,15 @@ export function MemberSignup() {
         </FormControl>
       </Box>
 
+      {/*value={nickName} 앞자리 띄어쓰기 못하게*/}
       <Box>
         <FormControl>
           <FormLabel>별명</FormLabel>
           <InputGroup>
             <Input
+              value={nickName}
               onChange={(e) => {
-                setNickName(e.target.value);
+                setNickName(e.target.value.trim());
                 setIsCheckedNickName(false);
               }}
             />
