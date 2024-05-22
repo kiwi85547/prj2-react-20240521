@@ -164,10 +164,12 @@ export function MemberSignup() {
           <InputGroup>
             <Input
               type={"email"}
+              value={email}
               onChange={(e) => {
-                setEmail(e.target.value);
+                setEmail(e.target.value.trim());
                 setIsCheckedEmail(false);
                 setIsValidEmail(!e.target.validity.typeMismatch);
+
                 console.log(e.target.validity);
                 // true 이면 Mismatch, false이면 잘 매치됨.
                 console.log(e.target.validity.typeMismatch);
