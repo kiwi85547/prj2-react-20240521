@@ -129,6 +129,7 @@ export function MemberSignup() {
   // isDisabled=false 버튼 활성화
   let isDisabled = false;
 
+  // isDisabled=true 버튼 비활성화
   if (!isCheckedPassword) {
     isDisabled = true;
   }
@@ -167,7 +168,6 @@ export function MemberSignup() {
                 setEmail(e.target.value);
                 setIsCheckedEmail(false);
                 setIsValidEmail(!e.target.validity.typeMismatch);
-                console.log(e.target.validity.typeMismatch);
               }}
             />
             <InputRightElement w={"75px"} mr={1}>
@@ -194,11 +194,7 @@ export function MemberSignup() {
       <Box>
         <FormControl>
           <FormLabel>암호</FormLabel>
-          <Input
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
+          <Input onChange={(e) => setPassword(e.target.value)} />
         </FormControl>
       </Box>
 
