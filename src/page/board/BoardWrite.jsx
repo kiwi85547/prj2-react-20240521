@@ -6,17 +6,18 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../../Component/LoginProvider.jsx";
 
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [writer, setWriter] = useState("");
   const toast = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const account = useContext(LoginContext);
 
   function handleSaveClick() {
     setLoading(true);
@@ -25,7 +26,6 @@ export function BoardWrite() {
         // property 명과 값이 같으면 하나만 써도 됨 title:title
         title,
         content,
-        writer,
       })
       .then(() => {
         toast({
@@ -57,9 +57,6 @@ export function BoardWrite() {
   if (content.trim().length === 0) {
     disableSaveButton = true;
   }
-  if (writer.trim().length === 0) {
-    disableSaveButton = true;
-  }
 
   return (
     <Box>
@@ -80,7 +77,8 @@ export function BoardWrite() {
         <Box>
           <FormControl>
             <FormLabel>작성자</FormLabel>
-            <Input onChange={(e) => setWriter(e.target.value)} />
+            {/*account에 저장된 nickName 가져오기*/}
+            <Input readOnly value={account.nickName} />
           </FormControl>
         </Box>
         <Box>
