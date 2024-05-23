@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode"; // 로그인 정보를 담는 context 만들기
 
 // 로그인 정보를 담는 context 만들기
@@ -11,6 +11,15 @@ export function LoginProvider({ children }) {
   const [email, setEmail] = useState("");
   const [nickName, setNickName] = useState("");
   const [expired, setExpired] = useState(0);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    // 없으면 null
+    if (token === null) {
+      return;
+    }
+    login(token);
+  }, []);
 
   // isLoggedIn
   function isLoggedIn() {
@@ -29,7 +38,7 @@ export function LoginProvider({ children }) {
   // login
   function login(token) {
     localStorage.setItem("token", token);
-    const payload = jwtDecode();
+    const payload = jwtDecode(token);
     setExpired(payload.exp);
     setEmail(payload.sub);
     setNickName(payload.nickName);

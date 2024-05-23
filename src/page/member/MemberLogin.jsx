@@ -29,6 +29,7 @@ export function MemberLogin() {
           status: "success",
           description: "로그인 되었습니다.",
           position: "top",
+          duration: 1000,
         });
         navigate("/");
       })
@@ -39,6 +40,7 @@ export function MemberLogin() {
           status: "warning",
           description: "이메일과 패스워드를 확인해주세요",
           position: "top",
+          duration: 1000,
         });
       });
   }
