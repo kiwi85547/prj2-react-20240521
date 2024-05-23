@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 import { ChakraProvider } from "@chakra-ui/react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Home } from "./page/Home.jsx";
@@ -11,6 +11,14 @@ import { MemberList } from "./page/member/MemberList.jsx";
 import { MemberInfo } from "./page/member/MemberInfo.jsx";
 import { MemberLogin } from "./page/member/MemberLogin.jsx";
 import { MemberEdit } from "./page/member/MemberEdit.jsx";
+
+// 로그인 정보를 담는 context 만들기
+// step1. context 만들기
+const LoginContext = createContext(null);
+
+// step2. context 사용하기
+
+// step3. context 제공하기
 
 const router = createBrowserRouter([
   {
@@ -33,11 +41,17 @@ const router = createBrowserRouter([
   },
 ]);
 
+function LoginProvider({ children }) {
+  return <LoginContext.Provider value={null}>{children}</LoginContext.Provider>;
+}
+
 function App(props) {
   return (
-    <ChakraProvider>
-      <RouterProvider router={router} />
-    </ChakraProvider>
+    <LoginProvider>
+      <ChakraProvider>
+        <RouterProvider router={router} />
+      </ChakraProvider>
+    </LoginProvider>
   );
 }
 
