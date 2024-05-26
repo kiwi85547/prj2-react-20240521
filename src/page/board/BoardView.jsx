@@ -9,7 +9,6 @@ import {
   Input,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -23,6 +22,7 @@ import {
 export function BoardView() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
+  const account = useContext(LoginContext);
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -45,7 +45,11 @@ export function BoardView() {
 
   function handleClickRemove() {
     axios
-      .delete(`/api/board/${id}`)
+      .delete(`/api/board/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then(() => {
         toast({
           status: "success",
@@ -84,7 +88,7 @@ export function BoardView() {
         <Box>
           <FormControl>
             <FormLabel>본문</FormLabel>
-            <Textarea readOnly>{board.content}</Textarea>
+            <Textarea value={board.content} readOnly />
           </FormControl>
         </Box>
 
@@ -96,31 +100,29 @@ export function BoardView() {
         </Box>
 
         <Box>
-          <FormControl>
-            <FormLabel>작성일시</FormLabel>
-            <Input type={"datetime-local"} value={board.inserted} readOnly />
-          </FormControl>
+          <FormControl>작성일시</FormControl>
+          <Input type={"datetime-local"} value={board.inserted} readOnly />
         </Box>
       </Box>
 
-      <Box>
-        <Button
-          colorScheme={"purple"}
-          onClick={() => {
-            navigate(`/edit/${board.id}`);
-          }}
-        >
-          수정
-        </Button>
-        <Button colorScheme={"red"} onClick={onOpen}>
-          삭제
-        </Button>
-      </Box>
+      {account.hasAccess(board.memberId) && (
+        <Box>
+          <Button
+            colorScheme={"purple"}
+            onClick={() => navigate(`/edit/${board.id}`)}
+          >
+            수정
+          </Button>
+          <Button colorScheme={"red"} onClick={onOpen}>
+            삭제
+          </Button>
+        </Box>
+      )}
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>메세지</ModalHeader>
+          <ModalHeader></ModalHeader>
           <ModalBody>삭제하시겠습니까?</ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>취소</Button>
@@ -128,7 +130,6 @@ export function BoardView() {
               확인
             </Button>
           </ModalFooter>
-          <ModalCloseButton />
         </ModalContent>
       </Modal>
     </Box>

@@ -8,9 +8,10 @@ export const LoginContext = createContext(null);
 // step2. context 사용하기
 // step3. context 제공하기
 export function LoginProvider({ children }) {
-  const [email, setEmail] = useState("");
+  const [id, setId] = useState("");
   const [nickName, setNickName] = useState("");
   const [expired, setExpired] = useState(0);
+  const [authority, setAuthority] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -29,10 +30,13 @@ export function LoginProvider({ children }) {
     return Date.now() < expired * 1000;
   }
 
-  // hasEmail
-  // ??????????????param이 뭐지?
-  function hasEmail(param) {
-    return email === param;
+  // 권한 있는 지? 확인
+  function hasAccess(param) {
+    return id == param;
+  }
+
+  function isAdmin() {
+    return authority.includes("admin");
   }
 
   // login
@@ -40,28 +44,31 @@ export function LoginProvider({ children }) {
     localStorage.setItem("token", token);
     const payload = jwtDecode(token);
     setExpired(payload.exp);
-    setEmail(payload.sub);
+    setId(payload.sub);
     setNickName(payload.nickName);
+    setAuthority(payload.scope.split(" ")); // "admin manager user"
   }
 
   // logout
   function logout() {
     localStorage.removeItem("token");
     setExpired(0);
-    setEmail("");
+    setId("");
     setNickName("");
+    setAuthority([]);
   }
 
   return (
     <LoginContext.Provider
       value={{
         // 키,값이 같으므로 하나씩만 써도 됨 email:email 말고 email
-        email: email,
+        id: id,
         nickName: nickName,
         login: login,
         logout: logout,
         isLoggedIn: isLoggedIn,
-        hasEmail: hasEmail,
+        hasAccess: hasAccess,
+        isAdmin: isAdmin,
       }}
     >
       {children}

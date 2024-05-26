@@ -27,6 +27,7 @@ export function MemberEdit() {
   const [passwordCheck, setPasswordCheck] = useState("");
   const [isCheckedNickName, setIsCheckedNickName] = useState(true);
   const [oldNickName, setOldNickName] = useState("");
+  const account = useContext(LoginContext);
   const { id } = useParams();
   const toast = useToast();
   const navigate = useNavigate();
@@ -59,6 +60,7 @@ export function MemberEdit() {
           description: "회원 정보가 수정되었습니다.",
           position: "top",
         });
+        account.login(res.data.token);
         navigate(`/member/${id}`);
       })
       .catch(() => {

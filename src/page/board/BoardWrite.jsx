@@ -14,10 +14,10 @@ import { LoginContext } from "../../Component/LoginProvider.jsx";
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const toast = useToast();
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const account = useContext(LoginContext);
+  const toast = useToast();
+  const navigate = useNavigate();
 
   function handleSaveClick() {
     setLoading(true);
@@ -92,10 +92,10 @@ export function BoardWrite() {
         </Box>
         <Box>
           <Button
-            colorScheme={"blue"}
-            onClick={handleSaveClick}
             isDisabled={disableSaveButton}
             isLoading={loading}
+            colorScheme={"blue"}
+            onClick={handleSaveClick}
           >
             저장
           </Button>

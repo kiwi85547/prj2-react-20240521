@@ -22,9 +22,9 @@ import {
 export function BoardEdit() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
+  const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const toast = useToast();
 
   useEffect(() => {
     axios.get(`/api/board/${id}`).then((res) => setBoard(res.data));
@@ -34,7 +34,11 @@ export function BoardEdit() {
   function handleClickSave() {
     // 수정은 put요청
     axios
-      .put(`/api/board/edit`, board)
+      .put(`/api/board/edit`, board, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then(() => {
         toast({
           status: "success",
@@ -90,12 +94,7 @@ export function BoardEdit() {
         <Box>
           <FormControl>
             <FormLabel>작성자</FormLabel>
-            <Input
-              defaultValue={board.writer}
-              onChange={(e) => {
-                setBoard({ ...board, writer: e.target.value });
-              }}
-            />
+            <Input defaultValue={board.writer} readOnly />
           </FormControl>
         </Box>
         <Box>

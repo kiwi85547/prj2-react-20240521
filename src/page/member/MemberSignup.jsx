@@ -157,8 +157,6 @@ export function MemberSignup() {
     isDisabled = true;
   }
 
-  console.log(isValidEmail);
-  console.log(email);
   return (
     <Box>
       <Box>회원가입</Box>
@@ -170,7 +168,7 @@ export function MemberSignup() {
               type={"email"}
               value={email}
               onChange={(e) => {
-                setEmail(e.target.value.trim());
+                setEmail(e.target.value);
                 setIsCheckedEmail(false);
                 setIsValidEmail(!e.target.validity.typeMismatch);
 
@@ -247,9 +245,9 @@ export function MemberSignup() {
       <Box>
         {/*isDisabled가 true이면 비활성화*/}
         <Button
+          isLoading={isLoading}
           colorScheme={"blue"}
           onClick={handleClick}
-          isLoading={isLoading}
           isDisabled={isDisabled}
         >
           가입
