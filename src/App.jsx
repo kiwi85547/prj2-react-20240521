@@ -11,7 +11,7 @@ import { MemberList } from "./page/member/MemberList.jsx";
 import { MemberInfo } from "./page/member/MemberInfo.jsx";
 import { MemberLogin } from "./page/member/MemberLogin.jsx";
 import { MemberEdit } from "./page/member/MemberEdit.jsx";
-import { LoginProvider } from "./Component/LoginProvider.jsx";
+import { LoginProvider } from "./component/LoginProvider.jsx";
 
 import axios from "axios";
 

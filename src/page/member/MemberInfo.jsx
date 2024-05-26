@@ -24,7 +24,6 @@ export function MemberInfo() {
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
   const account = useContext(LoginContext);
-  // 경로에 붙어서
   const { id } = useParams();
   const toast = useToast();
   const navigate = useNavigate();
