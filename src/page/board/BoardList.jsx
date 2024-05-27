@@ -20,7 +20,7 @@ export function BoardList() {
   }, [searchParams]);
 
   const pageNumbers = [];
-  for (let i = 1; i <= pageInfo.lastPageNumber; i++) {
+  for (let i = pageInfo.leftPageNumber; i <= pageInfo.rightPageNumber; i++) {
     pageNumbers.push(i);
   }
 
@@ -59,7 +59,13 @@ export function BoardList() {
       </Box>
       <Box>
         {pageNumbers.map((pageNumber) => (
-          <Button onClick={navigate(`/page/${pageNumber}`)} key={pageNumber}>
+          <Button
+            onClick={navigate(`/?page/${pageNumber}`)}
+            key={pageNumber}
+            colorScheme={
+              pageNumber === pageInfo.currentPageNumber ? "blue" : "gray"
+            }
+          >
             {pageNumber}
           </Button>
         ))}
