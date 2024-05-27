@@ -3,6 +3,9 @@ import {
   Button,
   ButtonGroup,
   Center,
+  Flex,
+  Input,
+  Select,
   Table,
   Tbody,
   Td,
@@ -18,6 +21,7 @@ import {
   faAngleRight,
   faAnglesLeft,
   faAnglesRight,
+  faMagnifyingGlass,
   faUserPen,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -25,6 +29,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 export function BoardList() {
   const [boardList, setBoardList] = useState([]);
   const [pageInfo, setPageInfo] = useState({});
+  const [searchType, setSearchType] = useState("all");
+  const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -43,6 +49,10 @@ export function BoardList() {
 
   // [{id:5, title:"제목1", writer : "누구1"},
   // {id:5, title:"제목1", writer : "누구1"},
+  function handleSearchClick() {
+    navigate(`/?type=${searchType}&keyword=${searchKeyword}`);
+  }
+
   // {id:5, title:"제목1", writer : "누구1"}]
   return (
     <Box>
@@ -74,6 +84,28 @@ export function BoardList() {
           </Tbody>
         </Table>
       </Box>
+      <Center>
+        <Flex>
+          <Box>
+            <Select onChange={(e) => setSearchType(e.target.value)}>
+              <option value="all">전체</option>
+              <option value="text">글</option>
+              <option value="nickName">작성자</option>
+            </Select>
+          </Box>
+          <Box>
+            <Input
+              onChange={(e) => setSearchKeyword(e.target.value)}
+              placeholder={"검색어"}
+            />
+          </Box>
+          <Box>
+            <Button onClick={handleSearchClick}>
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </Button>
+          </Box>
+        </Flex>
+      </Center>
       <Center>
         <ButtonGroup>
           <Box>
