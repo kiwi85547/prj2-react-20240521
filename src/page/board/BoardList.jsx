@@ -12,7 +12,13 @@ import {
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { faUserPen } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faAnglesLeft,
+  faAnglesRight,
+  faUserPen,
+} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 export function BoardList() {
@@ -72,11 +78,13 @@ export function BoardList() {
           {/* 처음 버튼, 이전 버튼 조건이 같음. 여러개의 컴포넌트이면 <></>로 감싸기*/}
           {pageInfo.prevPageNumber && (
             <>
-              <Button onClick={() => navigate(`/?page=1`)}>처음</Button>
+              <Button onClick={() => navigate(`/?page=1`)}>
+                <FontAwesomeIcon icon={faAnglesLeft} />
+              </Button>
               <Button
                 onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
               >
-                이전
+                <FontAwesomeIcon icon={faAngleLeft} />
               </Button>
             </>
           )}
@@ -96,11 +104,11 @@ export function BoardList() {
             <Button
               onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}
             >
-              다음
+              <FontAwesomeIcon icon={faAngleRight} />
             </Button>
           )}
           <Button onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}>
-            맨 끝
+            <FontAwesomeIcon icon={faAnglesRight} />
           </Button>
         </Box>
       </ButtonGroup>
