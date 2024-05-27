@@ -69,13 +69,16 @@ export function BoardList() {
       </Box>
       <ButtonGroup>
         <Box>
-          <Button onClick={() => navigate(`/?page=1`)}>처음</Button>
+          {/* 처음 버튼, 이전 버튼 조건이 같음. 여러개의 컴포넌트이면 <></>로 감싸기*/}
           {pageInfo.prevPageNumber && (
-            <Button
-              onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
-            >
-              이전
-            </Button>
+            <>
+              <Button onClick={() => navigate(`/?page=1`)}>처음</Button>
+              <Button
+                onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
+              >
+                이전
+              </Button>
+            </>
           )}
           {/* localhost:5173/?page=1 */}
           {pageNumbers.map((pageNumber) => (
