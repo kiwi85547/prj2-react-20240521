@@ -1,19 +1,28 @@
-import { Box, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { faUserPen } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export function BoardList() {
   const [boardList, setBoardList] = useState([]);
+  const [pageInfo, setPageInfo] = useState({});
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    axios.get("/api/board/list").then((res) => {
-      setBoardList(res.data);
+    axios.get(`/api/board/list?${searchParams}`).then((res) => {
+      setBoardList(res.data.boardList);
+      setPageInfo(res.data.pageInfo);
     });
-  }, []);
+    // dependency가 있으면 위의 함수를 트리거함. 얘가 변경되면 다시 마운트됨.
+  }, [searchParams]);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= pageInfo.lastPageNumber; i++) {
+    pageNumbers.push(i);
+  }
 
   // [{id:5, title:"제목1", writer : "누구1"},
   // {id:5, title:"제목1", writer : "누구1"},
@@ -47,6 +56,13 @@ export function BoardList() {
             ))}
           </Tbody>
         </Table>
+      </Box>
+      <Box>
+        {pageNumbers.map((pageNumber) => (
+          <Button onClick={navigate(`/page/${pageNumber}`)} key={pageNumber}>
+            {pageNumber}
+          </Button>
+        ))}
       </Box>
     </Box>
   );
