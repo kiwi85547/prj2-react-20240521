@@ -33,6 +33,9 @@ export function BoardList() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
   // 주소창에 입력한 쿼리스트링을 담고 있음
+  // 1. 리액트 라우터 쿼리스트링 설정
+  //  1-1) /board/id=1 useParams() :id
+  //  1-2) /board?id=1 useSearchParams()
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
