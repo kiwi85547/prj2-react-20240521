@@ -39,6 +39,16 @@ export function BoardList() {
       setBoardList(res.data.boardList);
       setPageInfo(res.data.pageInfo);
     });
+
+    const typeParam = searchParams.get("type");
+    const keywordParam = searchParams.get("keyword");
+    if (typeParam) {
+      setSearchType(typeParam);
+    }
+    if (keywordParam) {
+      setSearchKeyword(keywordParam);
+    }
+
     // dependency가 있으면 위의 함수를 트리거함. 얘가 변경되면 다시 마운트됨.
   }, [searchParams]);
 
@@ -98,6 +108,7 @@ export function BoardList() {
           </Box>
           <Box>
             <Input
+              value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
               placeholder={"검색어"}
             />
