@@ -1,4 +1,14 @@
-import { Box, Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -57,20 +67,40 @@ export function BoardList() {
           </Tbody>
         </Table>
       </Box>
-      <Box>
-        {/* localhost:5173/?page=1 */}
-        {pageNumbers.map((pageNumber) => (
-          <Button
-            onClick={() => navigate(`/?page=${pageNumber}`)}
-            key={pageNumber}
-            colorScheme={
-              pageNumber === pageInfo.currentPageNumber ? "blue" : "gray"
-            }
-          >
-            {pageNumber}
+      <ButtonGroup>
+        <Box>
+          <Button onClick={() => navigate(`/?page=1`)}>처음</Button>
+          {pageInfo.prevPageNumber && (
+            <Button
+              onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
+            >
+              이전
+            </Button>
+          )}
+          {/* localhost:5173/?page=1 */}
+          {pageNumbers.map((pageNumber) => (
+            <Button
+              onClick={() => navigate(`/?page=${pageNumber}`)}
+              key={pageNumber}
+              colorScheme={
+                pageNumber === pageInfo.currentPageNumber ? "blue" : "gray"
+              }
+            >
+              {pageNumber}
+            </Button>
+          ))}
+          {pageInfo.nextPageNumber && (
+            <Button
+              onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}
+            >
+              다음
+            </Button>
+          )}
+          <Button onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}>
+            맨 끝
           </Button>
-        ))}
-      </Box>
+        </Box>
+      </ButtonGroup>
     </Box>
   );
 }
