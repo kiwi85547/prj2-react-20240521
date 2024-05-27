@@ -58,9 +58,10 @@ export function BoardList() {
         </Table>
       </Box>
       <Box>
+        {/* localhost:5173/?page=1 */}
         {pageNumbers.map((pageNumber) => (
           <Button
-            onClick={navigate(`/?page/${pageNumber}`)}
+            onClick={() => navigate(`/?page=${pageNumber}`)}
             key={pageNumber}
             colorScheme={
               pageNumber === pageInfo.currentPageNumber ? "blue" : "gray"
