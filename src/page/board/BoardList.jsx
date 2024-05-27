@@ -32,6 +32,7 @@ export function BoardList() {
   const [searchType, setSearchType] = useState("all");
   const [searchKeyword, setSearchKeyword] = useState("");
   const navigate = useNavigate();
+  // 주소창에 입력한 쿼리스트링을 담고 있음
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -61,6 +62,11 @@ export function BoardList() {
   // {id:5, title:"제목1", writer : "누구1"},
   function handleSearchClick() {
     navigate(`/?type=${searchType}&keyword=${searchKeyword}`);
+  }
+
+  function handlePageButtonClick(pageNumber) {
+    searchParams.set("page", pageNumber);
+    navigate(`/?${searchParams}`);
   }
 
   // {id:5, title:"제목1", writer : "누구1"}]
@@ -130,7 +136,7 @@ export function BoardList() {
                   <FontAwesomeIcon icon={faAnglesLeft} />
                 </Button>
                 <Button
-                  onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
+                  onClick={() => handlePageButtonClick(pageInfo.prevPageNumber)}
                 >
                   <FontAwesomeIcon icon={faAngleLeft} />
                 </Button>
@@ -139,7 +145,12 @@ export function BoardList() {
             {/* localhost:5173/?page=1 */}
             {pageNumbers.map((pageNumber) => (
               <Button
-                onClick={() => navigate(`/?page=${pageNumber}`)}
+                // onClick={() => navigate(`/?page=${pageNumber}`)}
+                // onClick={someMethod1} // 함수 자체
+                // onClick={someMethod2()} // 리턴된 결과
+                // onClick={()=>someMethod3(pageNumber)} // 파라미터를 넣을 수 있음
+
+                onClick={() => handlePageButtonClick(pageNumber)}
                 key={pageNumber}
                 colorScheme={
                   pageNumber === pageInfo.currentPageNumber ? "blue" : "gray"
@@ -150,13 +161,13 @@ export function BoardList() {
             ))}
             {pageInfo.nextPageNumber && (
               <Button
-                onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}
+                onClick={() => handlePageButtonClick(pageInfo.nextPageNumber)}
               >
                 <FontAwesomeIcon icon={faAngleRight} />
               </Button>
             )}
             <Button
-              onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}
+              onClick={() => handlePageButtonClick(pageInfo.lastPageNumber)}
             >
               <FontAwesomeIcon icon={faAnglesRight} />
             </Button>
