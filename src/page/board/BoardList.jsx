@@ -58,6 +58,16 @@ export function BoardList() {
         </Table>
       </Box>
       <Box>
+        {pageInfo.prevPageNumber && (
+          <>
+            <Button onClick={() => navigate(`/?page=1`)}>맨 앞</Button>
+            <Button
+              onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
+            >
+              이전
+            </Button>
+          </>
+        )}
         {/* localhost:5173/?page=1 */}
         {pageNumbers.map((pageNumber) => (
           <Button
@@ -70,6 +80,14 @@ export function BoardList() {
             {pageNumber}
           </Button>
         ))}
+        {pageInfo.nextPageNumber && (
+          <Button onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}>
+            이후
+          </Button>
+        )}
+        <Button onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}>
+          맨 뒤
+        </Button>
       </Box>
     </Box>
   );
