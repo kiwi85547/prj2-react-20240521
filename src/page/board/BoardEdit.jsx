@@ -6,6 +6,7 @@ import {
   Button,
   FormControl,
   FormLabel,
+  Image,
   Input,
   Modal,
   ModalBody,
@@ -91,6 +92,18 @@ export function BoardEdit() {
             ></Textarea>
           </FormControl>
         </Box>
+
+        <Box>
+          <Box>
+            {board.files &&
+              board.files.map((file) => (
+                <Box border={"2px solid black"} m={3} key={file.name}>
+                  <Image src={file.src} />
+                </Box>
+              ))}
+          </Box>
+        </Box>
+
         <Box>
           <FormControl>
             <FormLabel>작성자</FormLabel>

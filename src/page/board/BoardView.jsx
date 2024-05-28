@@ -45,6 +45,11 @@ export function BoardView() {
       });
   }, []);
 
+  if (board != null) {
+    console.log(board);
+    console.log(account.hasAccess(board.memberId));
+  }
+
   function handleClickRemove() {
     axios
       .delete(`/api/board/${id}`, {
@@ -96,10 +101,10 @@ export function BoardView() {
 
         <Box>
           <Box>
-            {board.imageSrcList &&
-              board.imageSrcList.map((src) => (
-                <Box key={src}>
-                  <Image src={src} />
+            {board.files &&
+              board.files.map((file) => (
+                <Box border={"2px solid black"} m={3} key={file.name}>
+                  <Image src={file.src} />
                 </Box>
               ))}
           </Box>
