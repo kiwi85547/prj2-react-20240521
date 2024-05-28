@@ -4,6 +4,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Textarea,
   useToast,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
@@ -14,6 +15,7 @@ import { LoginContext } from "../../component/LoginProvider.jsx";
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const account = useContext(LoginContext);
   const toast = useToast();
@@ -67,6 +69,12 @@ export function BoardWrite() {
     disableSaveButton = true;
   }
 
+  // file 목록 작성
+  const fileNameList = [];
+  for (let i = 0; i < files.length; i++) {
+    fileNameList.push(<li>{files[i].name}</li>);
+  }
+
   return (
     <Box>
       <Box>글 작성 화면</Box>
@@ -80,8 +88,22 @@ export function BoardWrite() {
         <Box>
           <FormControl>
             <FormLabel>본문</FormLabel>
-            <Input onChange={(e) => setContent(e.target.value)} />
+            <Textarea onChange={(e) => setContent(e.target.value)} />
           </FormControl>
+        </Box>
+        <Box>
+          <FormControl>
+            <FormLabel>파일</FormLabel>
+            <Input
+              multiple
+              type="file"
+              accept="image/*"
+              onChange={(e) => setFiles(e.target.files)}
+            />
+          </FormControl>
+        </Box>
+        <Box>
+          <ul></ul>
         </Box>
         <Box>
           <FormControl>
