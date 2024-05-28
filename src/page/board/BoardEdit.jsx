@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
+  Badge,
   Box,
   Button,
   Flex,
@@ -48,6 +49,7 @@ export function BoardEdit() {
         title: board.title,
         content: board.content,
         removeFileList,
+        addFileList,
       })
       .then(() => {
         toast({
@@ -78,7 +80,22 @@ export function BoardEdit() {
   // 추가 파일 선택하면 목록 보이기
   const fileNameList = [];
   for (let addFile of addFileList) {
-    fileNameList.push(<li>{addFile.name}</li>);
+    // 이미 있는 파일과 중복된 파일명인지?
+    let duplicate = false;
+
+    fileNameList.push(
+      <li>
+        {addFile.name}
+        {duplicate && <Badge colorScheme={"red"}>override</Badge>}
+      </li>);
+
+  for(let file of board.fileList){
+    if(file.name) === addFile.name){
+      duplicate=true;
+      break;
+    }
+    }
+
   }
 
   function handleRemoveSwitchChange(name, checked) {
