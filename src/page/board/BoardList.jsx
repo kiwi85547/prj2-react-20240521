@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Button,
   ButtonGroup,
@@ -21,6 +22,7 @@ import {
   faAngleRight,
   faAnglesLeft,
   faAnglesRight,
+  faImage,
   faMagnifyingGlass,
   faUserPen,
 } from "@fortawesome/free-solid-svg-icons";
@@ -101,7 +103,15 @@ export function BoardList() {
                   key={a.id}
                 >
                   <Td>{a.id}</Td>
-                  <Td>{a.title}</Td>
+                  <Td>
+                    {a.title}
+                    {a.numberOfImages && (
+                      <Badge>
+                        <FontAwesomeIcon icon={faImage} />
+                        {a.numberOfImages}
+                      </Badge>
+                    )}
+                  </Td>
                   <Td>{a.writer}</Td>
                 </Tr>
               ))}
