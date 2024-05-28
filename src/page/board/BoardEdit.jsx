@@ -82,20 +82,18 @@ export function BoardEdit() {
   for (let addFile of addFileList) {
     // 이미 있는 파일과 중복된 파일명인지?
     let duplicate = false;
-
+    for (let file of board.fileList) {
+      if (file.name === addFile.name) {
+        duplicate = true;
+        break;
+      }
+    }
     fileNameList.push(
       <li>
         {addFile.name}
         {duplicate && <Badge colorScheme={"red"}>override</Badge>}
-      </li>);
-
-  for(let file of board.fileList){
-    if(file.name) === addFile.name){
-      duplicate=true;
-      break;
-    }
-    }
-
+      </li>,
+    );
   }
 
   function handleRemoveSwitchChange(name, checked) {
