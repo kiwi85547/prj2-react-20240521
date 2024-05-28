@@ -24,20 +24,12 @@ export function BoardWrite() {
   function handleSaveClick() {
     setLoading(true);
     axios
-      .post(
-        "/api/board/add",
-        {
-          // property 명과 값이 같으면 하나만 써도 됨 title:title
-          title,
-          content,
-        },
-        // Request Headers에 Authorization 붙여서 보내기
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        },
-      )
+      .postForm("/api/board/add", {
+        // property 명과 값이 같으면 하나만 써도 됨 title:title
+        title,
+        content,
+        files,
+      })
       .then(() => {
         toast({
           description: "새 글이 등록되었습니다.",
