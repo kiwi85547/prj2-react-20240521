@@ -112,8 +112,8 @@ export function BoardEdit() {
 
         <Box>
           <Box>
-            {board.files &&
-              board.files.map((file) => (
+            {board.fileList &&
+              board.fileList.map((file) => (
                 <Box border={"2px solid black"} m={3} key={file.name}>
                   <Flex>
                     <FontAwesomeIcon icon={faTrashCan} />
