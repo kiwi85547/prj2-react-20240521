@@ -88,7 +88,7 @@ export function BoardView() {
   function handleClickLike() {
     setIsLikeProcessing(true);
     axios
-      .put(`/api/board/like`, { boardId: board.id })
+      .put(`/api/board/like`, { boardId: board.id, like: like.like })
       .then((res) => {
         setLike(res.data);
       })
