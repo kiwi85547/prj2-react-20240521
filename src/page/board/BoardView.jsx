@@ -30,7 +30,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export function BoardView() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState({ like: false, count: 0 });
   const account = useContext(LoginContext);
   const toast = useToast();
   const navigate = useNavigate();
@@ -88,15 +88,26 @@ export function BoardView() {
     return <Spinner />;
   }
 
+  function handleClickLike() {
+    axios
+      .put(`/api/board/like`, { boardId: board.id })
+      .then((res) => {
+        setLike(res.data);
+      })
+      .catch(() => {}).finally;
+    // setLike({ ...like, like: !like.like });
+  }
+
   return (
     <Box>
       <Flex>
         <Heading>{board.id}번 게시물</Heading>
         <Spacer />
-        <Box onClick={() => setLike(!like)} cursor="pointer" fontSize="3xl">
-          {like && <FontAwesomeIcon icon={fullHeart} />}
-          {like || <FontAwesomeIcon icon={emptyHeart} />}
+        <Box onClick={handleClickLike} cursor="pointer" fontSize="3xl">
+          {like.like && <FontAwesomeIcon icon={fullHeart} />}
+          {like.like || <FontAwesomeIcon icon={emptyHeart} />}
         </Box>
+        <Box fontSize="3xl">{like.count}</Box>
       </Flex>
       <Box>
         <Box>
