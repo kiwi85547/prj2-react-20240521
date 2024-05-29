@@ -30,7 +30,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export function BoardView() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
-  const [like, setLike] = useState({ like: false, count: 0 });
+
+  const [like, setLike] = useState({
+    like: false,
+    count: 0,
+  });
 
   const [isLikeProcessing, setIsLikeProcessing] = useState(false);
   const account = useContext(LoginContext);
@@ -41,7 +45,10 @@ export function BoardView() {
   useEffect(() => {
     axios
       .get(`/api/board/${id}`)
-      .then((res) => setBoard(res.data))
+      .then((res) => {
+        setBoard(res.data.board);
+        setLike(res.data.like);
+      })
       .catch((err) => {
         if (err.response.status === 404) {
           toast({
