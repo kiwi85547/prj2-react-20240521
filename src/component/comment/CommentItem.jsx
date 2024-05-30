@@ -2,14 +2,19 @@ import { Box, Button, Flex, Spacer } from "@chakra-ui/react";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { useEffect } from "react";
 
-export function CommentItem({ comment }) {
+export function CommentItem({ comment, setCommentList, isSending }) {
   function handleRemoveClick() {
     axios
       .delete(`/api/comment/remove`, {
         data: { id: comment.id },
       })
-      .then((res) => {})
+      .then((res) => {
+        useEffect(() => {
+          setCommentList(res.data);
+        }, [isSending]);
+      })
       .catch((err) => {})
       .finally(() => {});
   }

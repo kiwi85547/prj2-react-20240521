@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export function CommentComponent({ boardId }) {
   const [isSending, setIsSending] = useState(false);
+
   return (
     <Box>
       <CommentWrite

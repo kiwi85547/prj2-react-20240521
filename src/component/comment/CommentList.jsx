@@ -3,8 +3,9 @@ import axios from "axios";
 import { Box } from "@chakra-ui/react";
 import { CommentItem } from "./CommentItem.jsx";
 
-export function CommentList({ boardId, isSending }) {
+export function CommentList({ boardId, isSending, setCommentList }) {
   const [commentList, setCommentList] = useState([]);
+
   useEffect(() => {
     if (!isSending) {
       axios
@@ -25,7 +26,7 @@ export function CommentList({ boardId, isSending }) {
   return (
     <Box>
       {commentList.map((comment) => (
-        <CommentItem comment={comment} key={comment.id} />
+        <CommentItem comment={comment} key={comment.id} transport={transport} />
       ))}
     </Box>
   );
