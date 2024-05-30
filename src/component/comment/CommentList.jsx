@@ -11,9 +11,14 @@ export function CommentList({ boardId }) {
       .catch((err) => console.log(err))
       .finally();
   }, []);
+  // [] 첫 렌더링에만 실행됨
+
   if (commentList.length === 0) {
     return <Box>댓글이 없습니다.</Box>;
   }
+
+  // commentList가 배열이고
+  // [{id:3},{memberId:22},{inserted: },{comment: "첫 댓글"}]
   return (
     <Box>
       {commentList.map((comment) => (
