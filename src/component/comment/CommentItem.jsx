@@ -24,7 +24,10 @@ export function CommentItem({ comment, isProcessing, setIsProcessing }) {
     setIsProcessing(true);
     axios
       .delete(`/api/comment/remove`, {
-        data: { id: comment.id },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        data: { id: comment.id, memberId: comment.memberId },
       })
       .then((res) => {})
       .catch((err) => {})
