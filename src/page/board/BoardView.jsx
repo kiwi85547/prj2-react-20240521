@@ -24,7 +24,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { LoginContext } from "../../component/LoginProvider.jsx";
-import { faHeart as fullHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as fullyHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CommentComponent } from "../../component/comment/CommentComponent.jsx";
@@ -122,8 +122,8 @@ export function BoardView() {
               label="로그인 해주세요."
             >
               <Box onClick={handleClickLike} cursor="pointer" fontSize="3xl">
-                {like.like && <FontAwesomeIcon icon={fullHeart} />}
-                {like.like || <FontAwesomeIcon icon={emptyHeart} />}
+                {like.like && <FontAwesomeIcon icon={fullyHeart} />}
+                {like.like || <FontAwesomeIcon icon={emptyHeart} beat />}
               </Box>
             </Tooltip>
             <Box fontSize="3xl">{like.count}</Box>
