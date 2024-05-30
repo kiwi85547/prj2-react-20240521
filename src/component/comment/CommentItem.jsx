@@ -15,9 +15,12 @@ import {
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { useContext } from "react";
+import { LoginContext } from "../LoginProvider.jsx";
 
 export function CommentItem({ comment, isProcessing, setIsProcessing }) {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const account = useContext(LoginContext);
   const toast = useToast();
 
   function handleRemoveClick() {
@@ -29,17 +32,25 @@ export function CommentItem({ comment, isProcessing, setIsProcessing }) {
         },
         data: { id: comment.id, memberId: comment.memberId },
       })
-      .then((res) => {})
-      .catch((err) => {})
-      .finally(() => {
-        onClose();
-        setIsProcessing(false);
+      .then((res) => {
         toast({
           description: "댓글이 삭제되었습니다.",
           position: "top",
           status: "info",
           duration: 1500,
         });
+      })
+      .catch((err) => {
+        toast({
+          description: "댓글이 삭제에 실패했습니다.",
+          position: "top",
+          status: "error",
+          duration: 1500,
+        });
+      })
+      .finally(() => {
+        onClose();
+        setIsProcessing(false);
       });
   }
 
@@ -54,9 +65,11 @@ export function CommentItem({ comment, isProcessing, setIsProcessing }) {
         <Box>{comment.comment}</Box>
         <Spacer />
         <Box>
-          <Button isLoading={isProcessing} colorScheme="red" onClick={onOpen}>
-            <FontAwesomeIcon icon={faTrashCan} />
-          </Button>
+          {account.hasAccess(comment.memberId) && (
+            <Button isLoading={isProcessing} colorScheme="red" onClick={onOpen}>
+              <FontAwesomeIcon icon={faTrashCan} />
+            </Button>
+          )}
         </Box>
       </Flex>
       <Modal isOpen={isOpen} onClose={onClose}>
