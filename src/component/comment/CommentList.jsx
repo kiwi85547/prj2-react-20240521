@@ -3,17 +3,17 @@ import axios from "axios";
 import { Box } from "@chakra-ui/react";
 import { CommentItem } from "./CommentItem.jsx";
 
-export function CommentList({ boardId, isSending }) {
+export function CommentList({ boardId, isProcessing, setIsProcessing }) {
   const [commentList, setCommentList] = useState([]);
   useEffect(() => {
-    if (!isSending) {
+    if (!isProcessing) {
       axios
         .get(`/api/comment/list/${boardId}`)
         .then((res) => setCommentList(res.data))
         .catch((err) => console.log(err))
         .finally();
     }
-  }, [isSending]);
+  }, [isProcessing]);
   // [] 첫 렌더링에만 실행됨
 
   if (commentList.length === 0) {
@@ -25,7 +25,12 @@ export function CommentList({ boardId, isSending }) {
   return (
     <Box>
       {commentList.map((comment) => (
-        <CommentItem comment={comment} key={comment.id} />
+        <CommentItem
+          isProcessing={isProcessing}
+          setIsProcessing={setIsProcessing}
+          comment={comment}
+          key={comment.id}
+        />
       ))}
     </Box>
   );
