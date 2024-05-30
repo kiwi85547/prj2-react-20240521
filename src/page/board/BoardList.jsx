@@ -22,6 +22,7 @@ import {
   faAngleRight,
   faAnglesLeft,
   faAnglesRight,
+  faComments,
   faHeart,
   faImage,
   faMagnifyingGlass,
@@ -99,25 +100,31 @@ export function BoardList() {
               </Tr>
             </Thead>
             <Tbody>
-              {boardList.map((a) => (
+              {boardList.map((board) => (
                 <Tr
                   cursor={"pointer"}
                   _hover={{ bgColor: "gray.200" }}
-                  onClick={() => navigate(`/board/${a.id}`)}
-                  key={a.id}
+                  onClick={() => navigate(`/board/${board.id}`)}
+                  key={board.id}
                 >
-                  <Td>{a.id}</Td>
+                  <Td>{board.id}</Td>
                   <Td>
-                    {a.title}
-                    {a.numberOfImages > 0 && (
+                    {board.title}
+                    {board.numberOfImages > 0 && (
                       <Badge>
                         <FontAwesomeIcon icon={faImage} />
-                        {a.numberOfImages}
+                        {board.numberOfImages}
+                      </Badge>
+                    )}
+                    {board.numberOfComments > 0 && (
+                      <Badge>
+                        <FontAwesomeIcon icon={faComments} />
+                        {board.numberOfComments}
                       </Badge>
                     )}
                   </Td>
-                  <Td>{a.numberOfLike > 0 && a.numberOfLike}</Td>
-                  <Td>{a.writer}</Td>
+                  <Td>{board.numberOfLike > 0 && board.numberOfLike}</Td>
+                  <Td>{board.writer}</Td>
                 </Tr>
               ))}
             </Tbody>
