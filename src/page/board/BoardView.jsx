@@ -116,7 +116,7 @@ export function BoardView() {
         {isLikeProcessing || (
           <Flex>
             <Tooltip
-              isDisable={account.isLoggedIn()}
+              isDisabled={account.isLoggedIn()}
               hasArrow
               label="로그인 해주세요."
             >
