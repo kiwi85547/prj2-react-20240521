@@ -22,6 +22,7 @@ import {
   faAngleRight,
   faAnglesLeft,
   faAnglesRight,
+  faHeart,
   faImage,
   faMagnifyingGlass,
   faUserPen,
@@ -90,6 +91,9 @@ export function BoardList() {
                 <Th>#</Th>
                 <Th>TiTle</Th>
                 <Th>
+                  <FontAwesomeIcon icon={faHeart} />
+                </Th>
+                <Th>
                   <FontAwesomeIcon icon={faUserPen} />
                 </Th>
               </Tr>
@@ -112,6 +116,7 @@ export function BoardList() {
                       </Badge>
                     )}
                   </Td>
+                  {a.numberOfLike > 0 && a.numberOfLike}
                   <Td>{a.writer}</Td>
                 </Tr>
               ))}
