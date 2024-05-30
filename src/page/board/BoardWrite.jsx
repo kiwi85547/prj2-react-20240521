@@ -30,6 +30,9 @@ export function BoardWrite() {
         title,
         content,
         files,
+        headers: {
+          Authorization: `Bearer `,
+        },
       })
       .then(() => {
         toast({
