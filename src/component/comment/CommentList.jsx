@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Box, Flex, Spacer } from "@chakra-ui/react";
 
-export function CommentList({ boardId }) {
+export function CommentList({ boardId, isSending }) {
   const [commentList, setCommentList] = useState([]);
   useEffect(() => {
-    axios
-      .get(`/api/comment/list/${boardId}`)
-      .then((res) => setCommentList(res.data))
-      .catch((err) => console.log(err))
-      .finally();
-  }, []);
+    if (!isSending) {
+      axios
+        .get(`/api/comment/list/${boardId}`)
+        .then((res) => setCommentList(res.data))
+        .catch((err) => console.log(err))
+        .finally();
+    }
+  }, [isSending]);
   // [] 첫 렌더링에만 실행됨
 
   if (commentList.length === 0) {

@@ -4,15 +4,21 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
-export function CommentWrite({ boardId }) {
+export function CommentWrite({ boardId, isSending, setIsSending }) {
   const [comment, setComment] = useState("");
+  // const [isSending, setIsSending] = useState(false);
+
+  // 전송버튼을 눌렀을 때 isSending이 true로 바뀜
 
   function handleCommentSubmitClick() {
+    setIsSending(true);
     axios
       .post("/api/comment/add", { boardId, comment })
       .then(() => {})
       .catch(() => {})
-      .finally(() => {});
+      .finally(() => {
+        setIsSending(false);
+      });
   }
 
   return (
@@ -22,7 +28,11 @@ export function CommentWrite({ boardId }) {
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       />
-      <Button onClick={handleCommentSubmitClick} colorScheme={"blue"}>
+      <Button
+        isLoading={isSending}
+        onClick={handleCommentSubmitClick}
+        colorScheme={"blue"}
+      >
         <FontAwesomeIcon icon={faPaperPlane} />
       </Button>
     </Box>
