@@ -5,10 +5,14 @@ import {
   Badge,
   Box,
   Button,
+  Card,
+  CardBody,
+  CardHeader,
   Flex,
   FormControl,
   FormHelperText,
   FormLabel,
+  Heading,
   Image,
   Input,
   Modal,
@@ -89,10 +93,10 @@ export function BoardEdit() {
       }
     }
     fileNameList.push(
-      <li>
-        {addFile.name}
-        {duplicate && <Badge colorScheme={"red"}>override</Badge>}
-      </li>,
+      <Box>
+        <Text fontSize={10}>{addFile.name}</Text>
+        <Box>{duplicate && <Badge colorScheme={"red"}>override</Badge>}</Box>
+      </Box>,
     );
   }
 
@@ -138,7 +142,7 @@ export function BoardEdit() {
           <Box>
             {board.fileList &&
               board.fileList.map((file) => (
-                <Box border={"2px solid black"} m={3} key={file.name}>
+                <Card m={3} key={file.name}>
                   <Flex>
                     <FontAwesomeIcon icon={faTrashCan} />
                     <Switch
@@ -158,7 +162,7 @@ export function BoardEdit() {
                       src={file.src}
                     />
                   </Box>
-                </Box>
+                </Card>
               ))}
           </Box>
         </Box>
@@ -177,9 +181,17 @@ export function BoardEdit() {
             </FormHelperText>
           </FormControl>
         </Box>
-        <Box>
-          <ul>{fileNameList}</ul>
-        </Box>
+
+        {fileNameList.length > 0 && (
+          <Box>
+            <Card>
+              <CardHeader>
+                <Heading size={"md"}>선택된 파일 목록</Heading>
+              </CardHeader>
+              <CardBody>{fileNameList}</CardBody>
+            </Card>
+          </Box>
+        )}
 
         <Box>
           <FormControl>

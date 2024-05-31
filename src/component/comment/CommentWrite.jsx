@@ -58,21 +58,23 @@ export function CommentWrite({ boardId, isProcessing, setIsProcessing }) {
           onChange={(e) => setComment(e.target.value)}
         />
       </Box>
-      <Tooltip
-        label="로그인 하세요"
-        isDisabled={account.isLoggedIn()}
-        placement={"top"}
-      >
-        <Button
-          h={"100%"}
-          isDisabled={comment.trim().length === 0 || !account.isLoggedIn()}
-          isLoading={isProcessing}
-          onClick={handleCommentSubmitClick}
-          colorScheme={"blue"}
+      <Box>
+        <Tooltip
+          label="로그인 하세요"
+          isDisabled={account.isLoggedIn()}
+          placement={"top"}
         >
-          <FontAwesomeIcon icon={faPaperPlane} />
-        </Button>
-      </Tooltip>
+          <Button
+            h={"100%"}
+            isDisabled={comment.trim().length === 0 || !account.isLoggedIn()}
+            isLoading={isProcessing}
+            onClick={handleCommentSubmitClick}
+            colorScheme={"blue"}
+          >
+            <FontAwesomeIcon icon={faPaperPlane} />
+          </Button>
+        </Tooltip>
+      </Box>
     </Flex>
   );
 }
