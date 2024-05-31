@@ -13,11 +13,13 @@ export function CommentComponent({ boardId }) {
         <Heading>
           <FontAwesomeIcon icon={faComments} /> COMMENTS
         </Heading>
-        <CommentWrite
-          boardId={boardId}
-          isProcessing={isProcessing}
-          setIsProcessing={setIsProcessing}
-        />
+        <Box mb={7}>
+          <CommentWrite
+            boardId={boardId}
+            isProcessing={isProcessing}
+            setIsProcessing={setIsProcessing}
+          />
+        </Box>
         <CommentList
           boardId={boardId}
           setIsProcessing={setIsProcessing}
