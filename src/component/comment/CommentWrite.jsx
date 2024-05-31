@@ -1,4 +1,11 @@
-import { Box, Button, Textarea, Tooltip, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Textarea,
+  Tooltip,
+  useToast,
+} from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -38,23 +45,26 @@ export function CommentWrite({ boardId, isProcessing, setIsProcessing }) {
   }
 
   return (
-    <Box>
-      <Textarea
-        isDisabled={!account.isLoggedIn()}
-        placeholder={
-          account.isLoggedIn()
-            ? "댓글을 작성해 보세요."
-            : "댓글을 저장하시려면 로그인하세요"
-        }
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-      />
+    <Flex gap={2}>
+      <Box flex={1}>
+        <Textarea
+          isDisabled={!account.isLoggedIn()}
+          placeholder={
+            account.isLoggedIn()
+              ? "댓글을 작성해 보세요."
+              : "댓글을 저장하시려면 로그인하세요"
+          }
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+      </Box>
       <Tooltip
         label="로그인 하세요"
         isDisabled={account.isLoggedIn()}
         placement={"top"}
       >
         <Button
+          h={"100%"}
           isDisabled={comment.trim().length === 0 || !account.isLoggedIn()}
           isLoading={isProcessing}
           onClick={handleCommentSubmitClick}
@@ -63,6 +73,6 @@ export function CommentWrite({ boardId, isProcessing, setIsProcessing }) {
           <FontAwesomeIcon icon={faPaperPlane} />
         </Button>
       </Tooltip>
-    </Box>
+    </Flex>
   );
 }
