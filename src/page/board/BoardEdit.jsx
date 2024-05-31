@@ -22,6 +22,8 @@ import {
   ModalHeader,
   ModalOverlay,
   Spinner,
+  Stack,
+  StackDivider,
   Switch,
   Text,
   Textarea,
@@ -47,6 +49,7 @@ export function BoardEdit() {
   // function은 return문 위에
   function handleClickSave() {
     // 수정은 put요청
+
     axios
       .putForm(`/api/board/edit`, {
         id: board.id,
@@ -83,6 +86,7 @@ export function BoardEdit() {
 
   // 추가 파일 선택하면 목록 보이기
   const fileNameList = [];
+
   for (let addFile of addFileList) {
     // 이미 있는 파일과 중복된 파일명인지?
     let duplicate = false;
@@ -94,7 +98,9 @@ export function BoardEdit() {
     }
     fileNameList.push(
       <Box>
-        <Text fontSize={10}>{addFile.name}</Text>
+        <Text fontSize={"md"} mr={3}>
+          {addFile.name}
+        </Text>
         <Box>{duplicate && <Badge colorScheme={"red"}>override</Badge>}</Box>
       </Box>,
     );
@@ -183,12 +189,16 @@ export function BoardEdit() {
         </Box>
 
         {fileNameList.length > 0 && (
-          <Box>
+          <Box mb={7}>
             <Card>
               <CardHeader>
                 <Heading size={"md"}>선택된 파일 목록</Heading>
               </CardHeader>
-              <CardBody>{fileNameList}</CardBody>
+              <CardBody>
+                <Stack divider={<StackDivider />} spacing={4}>
+                  {fileNameList}
+                </Stack>
+              </CardBody>
             </Card>
           </Box>
         )}
