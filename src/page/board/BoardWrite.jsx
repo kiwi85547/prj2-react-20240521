@@ -1,10 +1,17 @@
 import {
   Box,
   Button,
+  Card,
+  CardBody,
+  CardHeader,
   FormControl,
   FormHelperText,
   FormLabel,
+  Heading,
   Input,
+  Stack,
+  StackDivider,
+  Text,
   Textarea,
   useToast,
 } from "@chakra-ui/react";
@@ -68,26 +75,32 @@ export function BoardWrite() {
   // file 목록 작성
   const fileNameList = [];
   for (let i = 0; i < files.length; i++) {
-    fileNameList.push(<li>{files[i].name}</li>);
+    fileNameList.push(
+      <Box>
+        <Text fontSize={"md"}>{files[i].name}</Text>
+      </Box>,
+    );
   }
 
   return (
-    <Box>
-      <Box>글 작성 화면</Box>
-      <Box>
-        <Box>
+    <Box mx={5}>
+      <Box mb={10}>
+        <Box mb={7}>
+          <Heading>글 작성</Heading>
+        </Box>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>제목</FormLabel>
             <Input onChange={(e) => setTitle(e.target.value)} />
           </FormControl>
         </Box>
-        <Box>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>본문</FormLabel>
             <Textarea onChange={(e) => setContent(e.target.value)} />
           </FormControl>
         </Box>
-        <Box>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>파일</FormLabel>
             <Input
@@ -101,17 +114,28 @@ export function BoardWrite() {
             </FormHelperText>
           </FormControl>
         </Box>
-        <Box>
-          <ul></ul>
-        </Box>
-        <Box>
+
+        {fileNameList.length > 0 && (
+          <Box mb={7}>
+            <Card>
+              <CardHeader>선택된 파일 목록</CardHeader>
+              <CardBody>
+                <Stack divider={<StackDivider />} spacing={4}>
+                  {fileNameList}
+                </Stack>
+              </CardBody>
+            </Card>
+          </Box>
+        )}
+
+        <Box mb={7}>
           <FormControl>
             <FormLabel>작성자</FormLabel>
             {/*account에 저장된 nickName 가져오기*/}
             <Input readOnly value={account.nickName} />
           </FormControl>
         </Box>
-        <Box>
+        <Box mb={7}>
           <Button
             isDisabled={disableSaveButton}
             isLoading={loading}

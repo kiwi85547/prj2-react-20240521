@@ -43,15 +43,19 @@ export function BoardList() {
   //  1-2) /board?id=1 useSearchParams()
   const [searchParams] = useSearchParams();
 
+  // list?page=2 프론트 url
+  // /?page=2 백엔드 url
   useEffect(() => {
     axios.get(`/api/board/list?${searchParams}`).then((res) => {
       setBoardList(res.data.boardList);
       setPageInfo(res.data.pageInfo);
     });
 
+    // type:all, keyword:최고
     setSearchType("all");
     setSearchKeyword("");
 
+    // http://localhost:5173/?type=all&keyword
     const typeParam = searchParams.get("type");
     const keywordParam = searchParams.get("keyword");
     if (typeParam) {
