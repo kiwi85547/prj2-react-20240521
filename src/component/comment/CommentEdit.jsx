@@ -6,11 +6,11 @@ import { useState } from "react";
 import axios from "axios";
 
 export function CommentEdit({
-  comment,
-  setIsEditing,
-  setIsProcessing,
-  isProcessing,
-}) {
+                              comment,
+                              setIsEditing,
+                              setIsProcessing,
+                              isProcessing,
+                            }) {
   const [commentText, setCommentText] = useState(comment.comment);
 
   function handleCommentSubmit() {
