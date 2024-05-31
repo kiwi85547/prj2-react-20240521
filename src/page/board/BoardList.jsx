@@ -2,7 +2,6 @@ import {
   Badge,
   Box,
   Button,
-  ButtonGroup,
   Center,
   Flex,
   Heading,
@@ -90,18 +89,18 @@ export function BoardList() {
       <Box mb={10}>
         <Heading>게시물 목록</Heading>
       </Box>
-      <Box>
+      <Box mb={10}>
         {boardList.length === 0 && <Center>조회 결과가 없습니다.</Center>}
         {boardList.length > 0 && (
           <Table>
             <Thead>
               <Tr>
-                <Th>#</Th>
+                <Th w={20}>#</Th>
                 <Th>TiTle</Th>
-                <Th>
+                <Th w={20}>
                   <FontAwesomeIcon icon={faHeart} />
                 </Th>
-                <Th>
+                <Th w={40}>
                   <FontAwesomeIcon icon={faUserPen} />
                 </Th>
               </Tr>
@@ -138,8 +137,8 @@ export function BoardList() {
           </Table>
         )}
       </Box>
-      <Center>
-        <Flex>
+      <Center mb={10}>
+        <Flex gap={1}>
           <Box>
             <Select onChange={(e) => setSearchType(e.target.value)}>
               <option value="all">전체</option>
@@ -162,7 +161,7 @@ export function BoardList() {
         </Flex>
       </Center>
       <Center>
-        <ButtonGroup>
+        <Flex gap={1}>
           <Box>
             {/* 처음 버튼, 이전 버튼 조건이 같음. 여러개의 컴포넌트이면 <></>로 감싸기*/}
             {pageInfo.prevPageNumber && (
@@ -207,7 +206,7 @@ export function BoardList() {
               <FontAwesomeIcon icon={faAnglesRight} />
             </Button>
           </Box>
-        </ButtonGroup>
+        </Flex>
       </Center>
     </Box>
   );
