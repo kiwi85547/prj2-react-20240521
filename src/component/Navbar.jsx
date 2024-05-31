@@ -1,10 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { Center, Flex, Hide, Show, Spacer } from "@chakra-ui/react";
+import { Box, Center, Flex, Hide, Show, Spacer } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { LoginContext } from "./LoginProvider.jsx";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHouse,
+  faPencil,
+  faRightFromBracket,
+  faRightToBracket,
+  faUserPlus,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -13,7 +20,7 @@ export function Navbar() {
   return (
     <Flex px={{ lg: 200, base: 0 }} gap={3} height={20} bgColor={"gray.100"}>
       <Center
-        p={8}
+        p={6}
         fontSize={20}
         fontWeight={600}
         onClick={() => navigate("/")}
@@ -36,7 +43,10 @@ export function Navbar() {
           cursor={"pointer"}
           _hover={{ bgColor: "gray.200" }}
         >
-          글쓰기
+          <Show below={"lg"}>
+            <FontAwesomeIcon icon={faPencil} />
+          </Show>
+          <Hide below={"lg"}>글쓰기</Hide>
         </Center>
       )}
 
@@ -52,8 +62,14 @@ export function Navbar() {
             bgColor: "gray.200",
           }}
         >
-          <FontAwesomeIcon icon={faUser} />
-          {account.nickName}
+          <Flex gap={2}>
+            <Box>
+              <FontAwesomeIcon icon={faUser} />
+            </Box>
+            <Box>
+              <Hide below={"lg"}>{account.nickName}</Hide>
+            </Box>
+          </Flex>
         </Center>
       )}
       {account.isAdmin() && (
@@ -65,7 +81,7 @@ export function Navbar() {
           cursor={"pointer"}
           _hover={{ bgColor: "gray.200" }}
         >
-          회원목록
+          <FontAwesomeIcon icon={faUsers} />
         </Center>
       )}
 
@@ -79,7 +95,7 @@ export function Navbar() {
           cursor={"pointer"}
           _hover={{ bgColor: "gray.200" }}
         >
-          회원가입
+          <FontAwesomeIcon icon={faUserPlus} />
         </Center>
       )}
       {account.isLoggedIn() || (
@@ -93,7 +109,7 @@ export function Navbar() {
             bgColor: "gray.200",
           }}
         >
-          로그인
+          <FontAwesomeIcon icon={faRightToBracket} />
         </Center>
       )}
       {account.isLoggedIn() && (
@@ -111,7 +127,7 @@ export function Navbar() {
             bgColor: "gray.200",
           }}
         >
-          로그아웃
+          <FontAwesomeIcon icon={faRightFromBracket} />
         </Center>
       )}
     </Flex>
