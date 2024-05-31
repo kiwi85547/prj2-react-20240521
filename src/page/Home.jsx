@@ -9,7 +9,7 @@ export function Home() {
       <Box>
         <Navbar />
       </Box>
-      <Box mx={{ base: 0, lg: 200 }} mt={20}>
+      <Box mx={{ base: 0, lg: 200 }} mt={10}>
         <Outlet />
       </Box>
     </Box>

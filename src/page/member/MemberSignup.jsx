@@ -1,9 +1,11 @@
 import {
   Box,
   Button,
+  Center,
   FormControl,
   FormHelperText,
   FormLabel,
+  Heading,
   Input,
   InputGroup,
   InputRightElement,
@@ -41,8 +43,7 @@ export function MemberSignup() {
           duration: 1500,
           isClosable: true,
         });
-        // todo : 로그인 화면으로 이동
-        navigate("/");
+        navigate("/login");
       })
       .catch((err) => {
         // 클라이언트 쪽 오류
@@ -158,101 +159,106 @@ export function MemberSignup() {
   }
 
   return (
-    <Box>
-      <Box>회원가입</Box>
-      <Box>
-        <FormControl>
-          <FormLabel>이메일</FormLabel>
-          <InputGroup>
-            <Input
-              type={"email"}
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                setIsCheckedEmail(false);
-                setIsValidEmail(!e.target.validity.typeMismatch);
+    <Center>
+      <Box w={400}>
+        <Box mb={10}>
+          <Heading>회원가입</Heading>
+        </Box>
 
-                console.log(e.target.validity);
-                // true 이면 Mismatch, false이면 잘 매치됨.
-                console.log(e.target.validity.typeMismatch);
-              }}
-            />
-            <InputRightElement w={"75px"} mr={1}>
-              <Button
-                isDisabled={!isValidEmail || email.trim().length === 0}
-                onClick={handleCheckEmail}
-                size={"sm"}
-              >
-                중복확인
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-          {isCheckedEmail || (
-            <FormHelperText>이메일 중복확인을 해주세요.</FormHelperText>
-          )}
-          {isValidEmail || (
-            <FormHelperText>
-              올바른 이메일 형식으로 작성해 주세요.
-            </FormHelperText>
-          )}
-        </FormControl>
-      </Box>
+        <Box mb={7}>
+          <FormControl>
+            <FormLabel>이메일</FormLabel>
+            <InputGroup>
+              <Input
+                type={"email"}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setIsCheckedEmail(false);
+                  setIsValidEmail(!e.target.validity.typeMismatch);
 
-      <Box>
-        <FormControl>
-          <FormLabel>암호</FormLabel>
-          <Input onChange={(e) => setPassword(e.target.value)} />
-        </FormControl>
-      </Box>
+                  console.log(e.target.validity);
+                  // true 이면 Mismatch, false이면 잘 매치됨.
+                  console.log(e.target.validity.typeMismatch);
+                }}
+              />
+              <InputRightElement w={"75px"} mr={1}>
+                <Button
+                  isDisabled={!isValidEmail || email.trim().length === 0}
+                  onClick={handleCheckEmail}
+                  size={"sm"}
+                >
+                  중복확인
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            {isCheckedEmail || (
+              <FormHelperText>이메일 중복확인을 해주세요.</FormHelperText>
+            )}
+            {isValidEmail || (
+              <FormHelperText>
+                올바른 이메일 형식으로 작성해 주세요.
+              </FormHelperText>
+            )}
+          </FormControl>
+        </Box>
 
-      <Box>
-        <FormControl>
-          <FormLabel>암호 확인</FormLabel>
-          <Input onChange={(e) => setPasswordCheck(e.target.value)} />
-          {isCheckedPassword || (
-            <FormHelperText>암호가 일치하지 않습니다.</FormHelperText>
-          )}
-        </FormControl>
-      </Box>
+        <Box mb={7}>
+          <FormControl>
+            <FormLabel>암호</FormLabel>
+            <Input onChange={(e) => setPassword(e.target.value)} />
+          </FormControl>
+        </Box>
 
-      {/*value={nickName} 앞자리 띄어쓰기 못하게*/}
-      <Box>
-        <FormControl>
-          <FormLabel>별명</FormLabel>
-          <InputGroup>
-            <Input
-              value={nickName}
-              onChange={(e) => {
-                setNickName(e.target.value.trim());
-                setIsCheckedNickName(false);
-              }}
-            />
-            <InputRightElement w={"75px"} mr={1}>
-              <Button
-                isDisabled={nickName.trim().length === 0}
-                onClick={handleCheckNickName}
-                size="sm"
-              >
-                중복확인
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-          {isCheckedNickName || (
-            <FormHelperText>별명 중복확인을 해주세요.</FormHelperText>
-          )}
-        </FormControl>
+        <Box mb={7}>
+          <FormControl>
+            <FormLabel>암호 확인</FormLabel>
+            <Input onChange={(e) => setPasswordCheck(e.target.value)} />
+            {isCheckedPassword || (
+              <FormHelperText>암호가 일치하지 않습니다.</FormHelperText>
+            )}
+          </FormControl>
+        </Box>
+
+        {/*value={nickName} 앞자리 띄어쓰기 못하게*/}
+        <Box mb={7}>
+          <FormControl>
+            <FormLabel>별명</FormLabel>
+            <InputGroup>
+              <Input
+                value={nickName}
+                onChange={(e) => {
+                  setNickName(e.target.value.trim());
+                  setIsCheckedNickName(false);
+                }}
+              />
+              <InputRightElement w={"75px"} mr={1}>
+                <Button
+                  isDisabled={nickName.trim().length === 0}
+                  onClick={handleCheckNickName}
+                  size="sm"
+                >
+                  중복확인
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            {isCheckedNickName || (
+              <FormHelperText>별명 중복확인을 해주세요.</FormHelperText>
+            )}
+          </FormControl>
+        </Box>
+        <Box mb={7}>
+          {/*isDisabled가 true이면 비활성화*/}
+          <Button
+            isLoading={isLoading}
+            colorScheme={"blue"}
+            onClick={handleClick}
+            isDisabled={isDisabled}
+          >
+            가입
+          </Button>
+        </Box>
       </Box>
-      <Box>
-        {/*isDisabled가 true이면 비활성화*/}
-        <Button
-          isLoading={isLoading}
-          colorScheme={"blue"}
-          onClick={handleClick}
-          isDisabled={isDisabled}
-        >
-          가입
-        </Button>
-      </Box>
-    </Box>
+    </Center>
   );
 }

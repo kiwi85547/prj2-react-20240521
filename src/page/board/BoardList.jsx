@@ -5,6 +5,7 @@ import {
   ButtonGroup,
   Center,
   Flex,
+  Heading,
   Input,
   Select,
   Table,
@@ -82,7 +83,9 @@ export function BoardList() {
   // {id:5, title:"제목1", writer : "누구1"}]
   return (
     <Box>
-      <Box>게시물 목록</Box>
+      <Box mb={10}>
+        <Heading>게시물 목록</Heading>
+      </Box>
       <Box>
         {boardList.length === 0 && <Center>조회 결과가 없습니다.</Center>}
         {boardList.length > 0 && (
