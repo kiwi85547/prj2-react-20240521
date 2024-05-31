@@ -23,6 +23,11 @@ export function CommentList({ boardId, isProcessing, setIsProcessing }) {
   // commentList가 배열이고
   // [{id:3},{memberId:22},{inserted: },{comment: "첫 댓글"}]
   return (
+    // <Card>
+    //   <CardBody>
+    //
+    //   </CardBody>
+    // </Card>
     <Box>
       {commentList.map((comment) => (
         <CommentItem

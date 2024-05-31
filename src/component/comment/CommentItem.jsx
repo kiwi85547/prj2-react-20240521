@@ -9,6 +9,8 @@ import {
   ModalHeader,
   ModalOverlay,
   Spacer,
+  Stack,
+  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -17,8 +19,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { LoginContext } from "../LoginProvider.jsx";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarDays,
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import { CommentEdit } from "./CommentEdit.jsx";
+import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 
 export function CommentItem({ comment, isProcessing, setIsProcessing }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -47,30 +53,44 @@ export function CommentItem({ comment, isProcessing, setIsProcessing }) {
   }
 
   return (
-    <Box border={"1px solid black"} my={3}>
-      <Flex>
-        <Box>{comment.nickName}</Box>
+    <Box>
+      <Flex mb={7}>
+        <Flex fontWeight={900}>
+          <Box mr={3}>
+            <FontAwesomeIcon icon={faUser} />
+          </Box>
+          <Text>{comment.nickName}</Text>
+        </Flex>
         <Spacer />
+        <Box>
+          <FontAwesomeIcon icon={faCalendarDays} />
+        </Box>
         <Box>{comment.inserted}</Box>
       </Flex>
 
       {isEditing || (
         <Flex>
-          <Box>{comment.comment}</Box>
+          {/* 많은 글을 보여줄 때 스크롤 없애기*/}
+          <Box whiteSpace={"pre"}>{comment.comment}</Box>
           <Spacer />
           {account.hasAccess(comment.memberId) && (
-            <Box>
-              <Button colorScheme={"purple"} onClick={() => setIsEditing(true)}>
-                <FontAwesomeIcon icon={faPenToSquare} />
-              </Button>
-              <Button
-                isLoading={isProcessing}
-                colorScheme="red"
-                onClick={onOpen}
-              >
-                <FontAwesomeIcon icon={faTrashCan} />
-              </Button>
-            </Box>
+            <Stack>
+              <Box>
+                <Button
+                  colorScheme={"purple"}
+                  onClick={() => setIsEditing(true)}
+                >
+                  <FontAwesomeIcon icon={faPenToSquare} />
+                </Button>
+                <Button
+                  isLoading={isProcessing}
+                  colorScheme="red"
+                  onClick={onOpen}
+                >
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </Button>
+              </Box>
+            </Stack>
           )}
         </Flex>
       )}
