@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Box } from "@chakra-ui/react";
+import { Box, Card, CardBody, Stack, StackDivider } from "@chakra-ui/react";
 import { CommentItem } from "./CommentItem.jsx";
 
 export function CommentList({ boardId, isProcessing, setIsProcessing }) {
@@ -23,20 +23,19 @@ export function CommentList({ boardId, isProcessing, setIsProcessing }) {
   // commentList가 배열이고
   // [{id:3},{memberId:22},{inserted: },{comment: "첫 댓글"}]
   return (
-    // <Card>
-    //   <CardBody>
-    //
-    //   </CardBody>
-    // </Card>
-    <Box>
-      {commentList.map((comment) => (
-        <CommentItem
-          isProcessing={isProcessing}
-          setIsProcessing={setIsProcessing}
-          comment={comment}
-          key={comment.id}
-        />
-      ))}
-    </Box>
+    <Card>
+      <CardBody>
+        <Stack divider={<StackDivider />} spacing={2}>
+          {commentList.map((comment) => (
+            <CommentItem
+              isProcessing={isProcessing}
+              setIsProcessing={setIsProcessing}
+              comment={comment}
+              key={comment.id}
+            />
+          ))}
+        </Stack>
+      </CardBody>
+    </Card>
   );
 }
