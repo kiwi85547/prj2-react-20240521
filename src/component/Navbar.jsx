@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { Center, Flex, Spacer } from "@chakra-ui/react";
+import { Center, Flex, Hide, Show, Spacer } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { LoginContext } from "./LoginProvider.jsx";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -12,14 +13,17 @@ export function Navbar() {
   return (
     <Flex px={{ lg: 200, base: 0 }} gap={3} height={20} bgColor={"gray.100"}>
       <Center
-        p={6}
+        p={8}
         fontSize={20}
         fontWeight={600}
         onClick={() => navigate("/")}
         cursor={"pointer"}
         _hover={{ bgColor: "gray.200" }}
       >
-        Home
+        <Show below={"lg"}>
+          <FontAwesomeIcon icon={faHouse} />
+        </Show>
+        <Hide below={"lg"}>Home</Hide>
       </Center>
 
       {/*로그인 되었을 때*/}
