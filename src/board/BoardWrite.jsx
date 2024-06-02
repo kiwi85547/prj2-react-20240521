@@ -16,7 +16,7 @@ export function BoardWrite() {
         content,
         memberId,
       })
-      .then(
+      .then(() =>
         toast({
           description: "요청 성공",
           position: "top",
