@@ -32,7 +32,7 @@ export function BoardView() {
     axios.delete(`/api/board/${id}`).then(
       () =>
         toast({
-          description: "삭제되었습니다.",
+          description: `${id}번 게시물이 삭제되었습니다.`,
           position: "top",
           status: "info",
           duration: 2000,
@@ -61,10 +61,7 @@ export function BoardView() {
         <Input readOnly value={board.memberId} />
       </Box>
       <Box>
-        <Button
-          colorScheme={"blue"}
-          // onClick={handleEditClick}
-        >
+        <Button colorScheme={"blue"} onClick={() => navigate(`/edit/${id}`)}>
           수정
         </Button>
         <Button colorScheme={"red"} onClick={handleDeleteClick}>

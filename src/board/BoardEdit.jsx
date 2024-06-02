@@ -1,3 +1,3 @@
 export function BoardEdit() {
-  return null;
+  return "수정 화면";
 }

@@ -5,6 +5,7 @@ import { Home } from "./Home.jsx";
 import { BoardWrite } from "./board/BoardWrite.jsx";
 import { BoardList } from "./board/BoardList.jsx";
 import { BoardView } from "./board/BoardView.jsx";
+import { BoardEdit } from "./board/BoardEdit.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       { index: "true", element: <BoardList /> },
       { path: "write", element: <BoardWrite /> },
       { path: "board/:id", element: <BoardView /> },
+      { path: "edit/:id", element: <BoardEdit /> },
     ],
   },
 ]);
