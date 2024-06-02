@@ -7,10 +7,12 @@ export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [memberId, setMemberId] = useState(7);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
 
   function handleSaveClick() {
+    setIsLoading(true);
     axios
       .post("/api/board/add", {
         title,
@@ -35,7 +37,7 @@ export function BoardWrite() {
           duration: "2000",
         }),
       )
-      .finally();
+      .finally(setIsLoading(false));
   }
 
   let isDisable = false;
@@ -66,6 +68,7 @@ export function BoardWrite() {
           colorScheme={"blue"}
           onClick={handleSaveClick}
           isDisabled={isDisable}
+          isLoading={isLoading}
         >
           저장
         </Button>
