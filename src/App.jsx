@@ -4,6 +4,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Home } from "./Home.jsx";
 import { BoardWrite } from "./board/BoardWrite.jsx";
 import { BoardList } from "./board/BoardList.jsx";
+import { BoardView } from "./board/BoardView.jsx";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
       // { path: "", element: <BoardList /> },와 같음
       { index: "true", element: <BoardList /> },
       { path: "write", element: <BoardWrite /> },
+      { path: "board/:id", element: <BoardView /> },
     ],
   },
 ]);
