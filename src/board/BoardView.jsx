@@ -1,3 +1,1 @@
-export function BoardView() {
-  return null;
-}
+export function BoardView() {}

@@ -1,11 +1,13 @@
 import { Box, Button, Input, Textarea, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [memberId, setMemberId] = useState(7);
+  const navigate = useNavigate();
 
   const toast = useToast();
 
@@ -16,14 +18,24 @@ export function BoardWrite() {
         content,
         memberId,
       })
-      .then(() =>
+      .then(
+        () =>
+          toast({
+            description: "새 글이 등록되었습니다.",
+            position: "top",
+            status: "success",
+            duration: "2000",
+          }),
+        navigate("/"),
+      )
+      .catch(() =>
         toast({
-          description: "요청 성공",
+          description: "실패하였습니다.",
           position: "top",
-          status: "success",
+          status: "error",
+          duration: "2000",
         }),
       )
-      .catch()
       .finally();
   }
 
