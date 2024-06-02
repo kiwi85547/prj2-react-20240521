@@ -8,7 +8,6 @@ export function BoardWrite() {
   const [content, setContent] = useState("");
   const [memberId, setMemberId] = useState(7);
   const navigate = useNavigate();
-
   const toast = useToast();
 
   function handleSaveClick() {
@@ -39,6 +38,14 @@ export function BoardWrite() {
       .finally();
   }
 
+  let isDisable = false;
+  if (title.trim().length === 0) {
+    isDisable = true;
+  }
+
+  if (content.trim().length === 0) {
+    isDisable = true;
+  }
   return (
     <Box>
       글 작성 화면
@@ -55,7 +62,11 @@ export function BoardWrite() {
         <Input readOnly value={memberId}></Input>
       </Box>
       <Box>
-        <Button colorScheme={"blue"} onClick={handleSaveClick}>
+        <Button
+          colorScheme={"blue"}
+          onClick={handleSaveClick}
+          isDisabled={isDisable}
+        >
           저장
         </Button>
       </Box>
