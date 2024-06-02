@@ -19,7 +19,9 @@ export function BoardView() {
     <Spinner />;
   }
 
-  function handleDeleteClick() {}
+  function handleDeleteClick() {
+    axios.delete(`/api/board/${id}`).then((res) => {});
+  }
 
   return (
     <Box>
@@ -43,9 +45,7 @@ export function BoardView() {
       <Box>
         <Button
           colorScheme={"blue"}
-          // onClick={handleSaveClick}
-          // isDisabled={isDisable}
-          // isLoading={isLoading}
+          // onClick={handleEditClick}
         >
           수정
         </Button>
