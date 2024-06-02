@@ -1,11 +1,20 @@
-import { Box, Button, Input, Spinner, Textarea } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Input,
+  Spinner,
+  Textarea,
+  useToast,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export function BoardView() {
   const { id } = useParams();
   const [board, setBoard] = useState([]);
+  const toast = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -20,7 +29,16 @@ export function BoardView() {
   }
 
   function handleDeleteClick() {
-    axios.delete(`/api/board/${id}`).then((res) => {});
+    axios.delete(`/api/board/${id}`).then(
+      () =>
+        toast({
+          description: "삭제되었습니다.",
+          position: "top",
+          status: "info",
+          duration: 2000,
+        }),
+      navigate("/"),
+    );
   }
 
   return (
