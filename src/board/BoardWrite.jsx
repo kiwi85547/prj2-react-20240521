@@ -1,3 +1,3 @@
 export function BoardWrite() {
-  return null;
+  return <div>글 작성 화면</div>;
 }
