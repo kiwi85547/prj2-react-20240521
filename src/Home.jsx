@@ -10,7 +10,6 @@ export function Home() {
       <Box>
         <Outlet />
       </Box>
-      home 화면, Outlet 밑입니다.
     </Box>
   );
 }
