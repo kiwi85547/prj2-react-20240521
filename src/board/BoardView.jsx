@@ -20,7 +20,17 @@ export function BoardView() {
     axios
       .get(`/api/board/${id}`)
       .then((res) => setBoard(res.data))
-      .catch()
+      .catch((err) => {
+        if (err.response.status === 404) {
+          toast({
+            description: `${id}번 게시물을 찾을 수 없습니다.`,
+            position: "top",
+            status: "error",
+            duration: 3000,
+          });
+          navigate("/");
+        }
+      })
       .finally();
   }, []);
 
