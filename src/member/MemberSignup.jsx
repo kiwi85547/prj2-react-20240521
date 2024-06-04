@@ -18,7 +18,7 @@ export function MemberSignup() {
 
   function handleSignup() {
     axios
-      .put("/api/member/signup", { email, password, nickName })
+      .post("/api/member/signup", { email, password, nickName })
       .then()
       .catch()
       .finally();
