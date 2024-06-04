@@ -5,8 +5,9 @@ import {
   FormHelperText,
   FormLabel,
   Input,
+  useToast,
 } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
@@ -15,13 +16,38 @@ export function MemberSignup() {
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [nickName, setNickName] = useState("");
+  const toast = useToast();
+  const navigate = useNavigate();
 
+  let isloading = false;
+  let isdisabled = true;
   function handleSignup() {
+    isloading = true;
     axios
       .post("/api/member/signup", { email, password, nickName })
-      .then()
-      .catch()
-      .finally();
+      .then(() => {
+        toast({
+          description: "회원가입 되었습니다.",
+          position: "top",
+          status: "success",
+          duration: 2000,
+        }),
+          navigate("/");
+      })
+      .catch((res) => {
+        if (res.response.status === 500) {
+          toast({
+            description: "회원가입에 실패하였습니다.",
+            position: "top",
+            status: "error",
+            duration: 2000,
+          });
+        }
+      })
+      .finally((isloading = false));
+  }
+  if (password === passwordCheck) {
+    isdisabled = false;
   }
 
   return (
@@ -35,6 +61,7 @@ export function MemberSignup() {
           <FormLabel>
             <Input onChange={(e) => setEmail(e.target.value)} />
           </FormLabel>
+          <Button>중복확인</Button>
         </FormControl>
         <FormControl mb={5}>
           패스워드
@@ -57,7 +84,12 @@ export function MemberSignup() {
             <Input onChange={(e) => setNickName(e.target.value)} />
           </FormLabel>
         </FormControl>
-        <Button colorScheme={"blue"} onClick={handleSignup}>
+        <Button
+          colorScheme={"blue"}
+          onClick={handleSignup}
+          isLoading={isloading}
+          isDisabled={isdisabled}
+        >
           회원가입
         </Button>
         <Outlet />
